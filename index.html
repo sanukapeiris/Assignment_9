@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Night Rider Circuit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<style>
+  body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    width: 1000px;
+  }
+
+  .lights {
+    display: flex;
+  }
+  .light {
+    width: 250px;
+    height: 50px;
+    background-color: #fff;
+    margin: 5px;
+  }
+
+
+</style>
+<div class="container">
+  <div class="lights">
+    <div class="light" id="light1"></div>
+    <div class="light" id="light2"></div>
+    <div class="light" id="light3"></div>
+    <div class="light" id="light4"></div>
+    <div class="light" id="light5"></div>
+  </div>
+  <div class="controls">
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+  </div>
+</div>
+<script>
+  const lights = document.querySelectorAll('.light');
+  let currentIndex = 0;
+  let direction = 'right';
+  let intervalId = null;
+
+  function updateLights() {
+    lights.forEach((light, index) => {
+      if (index === currentIndex) {
+        light.style.backgroundColor = 'red';
+      } else {
+        light.style.backgroundColor = '#fff';
+      }
+    });
+  }
+
+  function moveLights() {
+    if (direction === 'right') {
+      currentIndex++;
+      if (currentIndex === lights.length - 1) {
+        direction = 'left';
+      }
+    } else {
+      currentIndex--;
+      if (currentIndex === 0) {
+        direction = 'right';
+      }
+    }
+    updateLights();
+  }
+
+  document.getElementById('startButton').addEventListener('click', function() {
+    if (!intervalId) {
+      intervalId = setInterval(moveLights, 200);
+    }
+  });
+
+  document.getElementById('stopButton').addEventListener('click', function() {
+    clearInterval(intervalId);
+    intervalId = null;
+  });
+
+</script>
+</body>
+</html>
